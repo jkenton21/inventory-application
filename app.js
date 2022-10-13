@@ -13,7 +13,12 @@ var helmet = require('helmet');
 var app = express();
 
 var mongoose = require('mongoose');
-//MongoDBlines
+var dev_db_url = 'mongodb+srv://inventory:inventoryapp@cluster0.hq1gsnv.mongodb.net/inventory-application?retryWrites=true&w=majority';
+var mongoDB = process.env.MONGODB_URI || dev_db_url;
+
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
